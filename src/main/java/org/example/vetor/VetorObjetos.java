@@ -1,36 +1,15 @@
 package org.example.vetor;
 
-import java.util.Arrays;
-
-public class Vetor {
-    private String[] elementos;
+public class VetorObjetos {
+    private Object[] elementos;
     private int tamanho;
 
-    public Vetor(int capacidade) {
-        this.elementos = new String[capacidade];
+    public VetorObjetos(int capacidade) {
+        this.elementos = new Object[capacidade];
         this.tamanho = 0;
     }
 
-//    public void adiciona(String elemento) {
-//        for (int i = 0; i < this.elementos.length; i++) {
-//            if(this.elementos[i] == null) {
-//                this.elementos[i] = elemento;
-//                break;
-//            }
-//        }
-//    }
-
-//    public void adiciona(String elemento) throws Exception {
-//
-//        if (this.tamanho < this.elementos.length) {
-//            this.elementos[this.tamanho] = elemento;
-//            this.tamanho++;
-//        } else {
-//            throw new Exception("Vetor já está cheio, não é possivel adicionar mais elementos");
-//        }
-//    }
-
-    public boolean adiciona(String elemento) {
+    public boolean adiciona(Object elemento) {
         this.aumentaCapacidade();
         if (this.tamanho < this.elementos.length) {
             this.elementos[this.tamanho] = elemento;
@@ -40,7 +19,7 @@ public class Vetor {
         return false;
     }
 
-    public void adiciona(int posicao, String elemento) {
+    public void adiciona(int posicao, Object elemento) {
 
         if (!(posicao >= 0 && posicao < this.tamanho)) {
             throw new IllegalArgumentException("Posição invalida!");
@@ -67,34 +46,33 @@ public class Vetor {
             throw new IllegalArgumentException("Posição invalida!");
         }
 
-        for(int i = posicao; i < this.tamanho; i++) {
+        for (int i = posicao; i < this.tamanho - 1; i++) {
             this.elementos[i] = this.elementos[i + 1];
         }
 
         this.tamanho--;
     }
 
+
     private void aumentaCapacidade() {
         if (this.tamanho == this.elementos.length) {
-            String[] elementosNovos = new String[this.elementos.length * 2];
+            Object[] elementosNovos = new Object[this.elementos.length * 2];
 
-            for (int i = 0; i < this.elementos.length; i++) {
-                elementosNovos[i] = this.elementos[i];
-            }
+            System.arraycopy(this.elementos, 0, elementosNovos, 0, this.elementos.length);
 
             this.elementos = elementosNovos;
         }
     }
 
 
-    public String busca(int posicao) {
+    public Object busca(int posicao) {
         if (!(posicao >= 0 && posicao < this.tamanho)) {
             throw new IllegalArgumentException("Posição invalida!");
         }
         return this.elementos[posicao];
     }
 
-    public int busca(String elemento) {
+    public int busca(Object elemento) {
         for (int i = 0; i < this.tamanho; i++) {
             if (this.elementos[i].equals(elemento)) {
                 return i;
