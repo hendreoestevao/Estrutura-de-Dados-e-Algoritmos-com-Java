@@ -1,7 +1,6 @@
 package org.example.vetor;
 
 import java.lang.reflect.Array;
-import java.util.Arrays;
 
 public class Lista<T> {
     private T[] elementos;
@@ -62,10 +61,22 @@ public class Lista<T> {
         this.tamanho--;
     }
 
+    public void remover(T elemento) {
+        int pos = this.busca(elemento);
+        if (pos > -1) {
+            this.remover(pos);
+        }
+    }
+
+    public void limpar() {
+        this.elementos = (T[]) new Object[this.elementos.length];
+        this.tamanho = 0;
+    }
+
 
     private void aumentaCapacidade() {
         if (this.tamanho == this.elementos.length) {
-            T[] elementosNovos =(T[]) new Object[this.elementos.length * 2];
+            T[] elementosNovos = (T[]) new Object[this.elementos.length * 2];
 
             System.arraycopy(this.elementos, 0, elementosNovos, 0, this.elementos.length);
 
@@ -73,8 +84,11 @@ public class Lista<T> {
         }
     }
 
+    public T obtem(int posicao) {
+        return this.busca(posicao);
+    }
 
-    public Object busca(int posicao) {
+    public T busca(int posicao) {
         if (!(posicao >= 0 && posicao < this.tamanho)) {
             throw new IllegalArgumentException("Posição invalida!");
         }
@@ -90,6 +104,25 @@ public class Lista<T> {
         return -1;
     }
 
+    public boolean contem(T elemento) {
+//        int pos = busca(elemento);
+//        if (pos > -1) {
+//            return true;
+//        }
+        return busca(elemento) > -1;
+    }
+
+    public int ultimoIndice(T elemento) {
+
+
+        for (int i = this.tamanho - 1; i >= 0; i--) {
+            if (this.elementos[i].equals(elemento)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
 
     public int tamanho() {
         return this.tamanho;
