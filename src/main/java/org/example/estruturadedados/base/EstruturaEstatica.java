@@ -27,10 +27,6 @@ public class EstruturaEstatica<T> {
 
     protected void adiciona(int posicao, T elemento) {
 
-        if (!(posicao >= 0 && posicao < this.tamanho)) {
-            throw new IllegalArgumentException("Posição invalida!");
-        }
-
         this.aumentaCapacidade();
         //mover todos os elementos
         for (int i = this.tamanho; i >= posicao; i--) {
@@ -76,5 +72,16 @@ public class EstruturaEstatica<T> {
 
     public boolean estaVazia() {
         return this.tamanho == 0;
+    }
+
+    protected void remove(int posicao) {
+        if (!(posicao >= 0 && posicao < this.tamanho)) {
+            throw new IllegalArgumentException("Posicao invalida!");
+        }
+
+        for (int i = posicao; i < this.tamanho - 1; i++) {
+            this.elementos[i] = this.elementos[i + 1];
+        }
+        this.tamanho--;
     }
 }
